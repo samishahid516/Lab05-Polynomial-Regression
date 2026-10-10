@@ -6,6 +6,10 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from itertools import combinations_with_replacement
+from pathlib import Path
+
+OUTPUT_DIR = Path("outputs")
+OUTPUT_DIR.mkdir(exist_ok=True)
 
 # ---------------------------------------------------------------
 # Functions written by us
@@ -54,7 +58,7 @@ im = ax[4].imshow(corr.values, cmap="coolwarm", vmin=-1, vmax=1)
 ax[4].set_xticks(range(5)); ax[4].set_yticks(range(5))
 ax[4].set_xticklabels(corr.columns, rotation=45, ha="right"); ax[4].set_yticklabels(corr.columns)
 ax[4].set_title("Correlation matrix"); plt.colorbar(im, ax=ax[4])
-plt.tight_layout(); plt.savefig("task2_explore.png", dpi=110); plt.show()
+plt.tight_layout(); plt.savefig(OUTPUT_DIR / "task2_explore.png", dpi=110); plt.show()
 
 # ---------------------------------------------------------------
 # 2. Split 70/30 and standardise (train mean/std)
@@ -76,7 +80,7 @@ fig, ax = plt.subplots(1, 3, figsize=(14, 4))
 for a, lab, ttl in [(ax[0], "HP", "HP (original)"), (ax[1], "HP*HP", "HP squared (new)"), (ax[2], "HP*Wt", "HP x Weight (interaction)")]:
     a.scatter(Xp[:, labels.index(lab)], y_tr, s=12, color="tab:purple")
     a.set(title=f"MPG vs {ttl}", xlabel=lab, ylabel="MPG")
-plt.tight_layout(); plt.savefig("task2_engineered_features.png", dpi=110); plt.show()
+plt.tight_layout(); plt.savefig(OUTPUT_DIR / "task2_engineered_features.png", dpi=110); plt.show()
 
 # ---------------------------------------------------------------
 # 4. Experiment with degree
@@ -129,7 +133,7 @@ ax[1].plot(res.Degree, res.Train_MSE, "o-", label="Train MSE"); ax[1].plot(res.D
 ax[1].set(title="Degree vs Error", xlabel="Degree", ylabel="MSE"); ax[1].legend()
 ax[2].scatter(p_te, y_te - p_te, color="tab:green"); ax[2].axhline(0, color="r", ls="--")
 ax[2].set(title="Residuals (test)", xlabel="Predicted", ylabel="Actual - Predicted")
-plt.tight_layout(); plt.savefig("task2_results.png", dpi=110); plt.show()
+plt.tight_layout(); plt.savefig(OUTPUT_DIR / "task2_results.png", dpi=110); plt.show()
 
 # ---------------------------------------------------------------
 # 8. Predict a new car

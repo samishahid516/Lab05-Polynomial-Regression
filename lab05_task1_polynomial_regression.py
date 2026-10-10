@@ -7,8 +7,11 @@ Model: y = b0 + b1*x + b2*x^2 + ... + bn*x^n
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+from pathlib import Path
 
 DEGREES = [2, 4, 5]          # <- change these to compare other degrees
+OUTPUT_DIR = Path("outputs")
+OUTPUT_DIR.mkdir(exist_ok=True)
 
 # ---------------------------------------------------------------
 # Functions written by us
@@ -89,7 +92,7 @@ for a, deg in zip(ax, [1] + DEGREES):
     a.set(title=("Linear (degree 1)" if deg == 1 else f"Degree {deg}") + f"\nlevel 6.5 -> {p65:,.0f}",
           xlabel="Position level")
 ax[0].set_ylabel("Salary")
-plt.tight_layout(); plt.savefig("task1_A_position_degrees.png", dpi=120); plt.show()
+plt.tight_layout(); plt.savefig(OUTPUT_DIR / "task1_A_position_degrees.png", dpi=120); plt.show()
 
 # ===============================================================
 # PART B : Braking_Distance.csv (80 rows) with TRAIN / TEST split
@@ -150,7 +153,7 @@ for deg in DEGREES:
     ax[2].plot(xe, poly_features(z(xe), deg) @ fits[deg], color=colors[deg], label=f"degree {deg}")
 ax[2].axvline(x.max(), color="gray", ls="--"); ax[2].text(x.max() + 1, y.min() + 2, "end of data", color="gray")
 ax[2].set(title="Beyond the data: curves disagree (extrapolation)", xlabel="Speed (km/h)"); ax[2].legend()
-plt.tight_layout(); plt.savefig("task1_B_braking_degrees.png", dpi=120); plt.show()
+plt.tight_layout(); plt.savefig(OUTPUT_DIR / "task1_B_braking_degrees.png", dpi=120); plt.show()
 
 print("""
 HOW TO READ THE COMPARISON
